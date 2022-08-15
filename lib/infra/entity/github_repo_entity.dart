@@ -1,4 +1,5 @@
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:gethub/foundation/typedefs.dart';
 
 class GitHubRepoEntity {
   GitHubRepoEntity({
@@ -18,8 +19,8 @@ class GitHubRepoEntity {
   final int forksCount;
   final int openIssuesCount;
 
-  factory GitHubRepoEntity.fromJson(Map<String, Object> json) {
-    final owner = json['owner'] as Map<String, Object>;
+  factory GitHubRepoEntity.fromJson(Json json) {
+    final owner = json['owner'] as Json;
     return GitHubRepoEntity(
       name: json['name'] as String,
       ownerAvatarUrl: owner['avator_url'] as String,
