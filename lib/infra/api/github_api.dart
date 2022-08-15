@@ -29,6 +29,7 @@ class GitHubAPI implements IGitHubAPI {
           .toList();
       return gitHubRepos;
     } on Exception {
+      // TODO: UI側でエラー内容に対応するエラー画面を表示する。
       rethrow;
     } finally {
       httpClient.close();
