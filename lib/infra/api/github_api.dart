@@ -24,6 +24,11 @@ class GitHubAPI implements IGitHubAPI {
       final content = await response.transform(utf8.decoder).join();
       final data = json.decode(content);
 
+      if (data['items'] == null) {
+        // itemsがnullの場合、Iterable型へのキャスト時に例外が発生するため防いでおく
+        return <GitHubRepo>[];
+      }
+
       final Iterable items = data['items'];
       final gitHubRepos = items
           .map((item) => GitHubRepoEntity.fromJson(Json.from(item)).toModel())
