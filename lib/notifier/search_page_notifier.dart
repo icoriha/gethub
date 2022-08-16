@@ -18,7 +18,10 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
 
   Future<void> search() async {
     final searchWord = searchBarTextController.text;
-    if (isBlank(searchWord)) return;
+    if (isBlank(searchWord)) {
+      await _cleanUp();
+      return;
+    }
 
     state = state.copyWith(isLoading: true);
 
@@ -64,5 +67,13 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     } finally {
       state = state.copyWith(isLoading: false);
     }
+  }
+
+  Future<void> _cleanUp() async {
+    state = state.copyWith(isLoading: true);
+    await Future.delayed(const Duration(seconds: 1)); // UX向上を意図した遅延
+    state = state.copyWith(repos: null);
+    state = state.copyWith(isLoading: false);
+    return;
   }
 }
