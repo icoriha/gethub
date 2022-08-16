@@ -16,7 +16,7 @@ class GitHubAPI implements IGitHubAPI {
   Future<List<GitHubRepo>> searchRepos(String searchWord) async {
     final httpClient = HttpClient();
     try {
-      final query = '?q=$searchWord';
+      final query = '?q=$searchWord&per_page=100';
 
       final request = await httpClient.getUrl(Uri.parse(url + query));
       final response = await request.close();
