@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:quiver/strings.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage(this.repo, {Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ダミーアイコン
-    if (iconUrl.isEmpty) return const Icon(Icons.account_circle, size: 64);
+    if (isBlank(iconUrl)) return const Icon(Icons.account_circle, size: 64);
 
     return CircleAvatar(
       radius: 32,
