@@ -19,11 +19,13 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
   Future<void> search() async {
     final searchWord = searchBarTextController.text;
     if (isBlank(searchWord)) {
+      // 空文字の場合は検索前の状態に戻す
       await _cleanUp();
       return;
     }
 
-    state = state.copyWith(isLoading: true);
+    // 検索が成功した場合でもページは1に戻るためnextPageは初期値に戻しておく
+    state = state.copyWith(isLoading: true, nextPage: 2);
 
     try {
       final repos = await _gitHubAPI.searchRepos(
@@ -39,6 +41,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
   }
 
   Future<void> onScrollEnd() async {
+    if (state.isLoading) return; // ローディング中は何もしない
     if (state.repos == null) return; // 初期状態ではスクロールしても何もしない
     if (state.repos!.isEmpty) return; // 検索結果が無い場合はスクロールしても何もしない
 
@@ -72,8 +75,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
   Future<void> _cleanUp() async {
     state = state.copyWith(isLoading: true);
     await Future.delayed(const Duration(seconds: 1)); // UX向上を意図した遅延
-    state = state.copyWith(repos: null);
-    state = state.copyWith(isLoading: false);
+    state = const SearchPageState();
     return;
   }
 }
