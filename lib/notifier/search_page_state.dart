@@ -10,6 +10,7 @@ class SearchPageState with _$SearchPageState {
     @Default(null) List<GitHubRepo>? repos,
     @Default(2) int nextPage,
     @Default(false) bool isLoading,
+    @Default(null) String? lastSearchedWord,
     @Default(null) String? errorMessage,
   }) = _SearchPageState;
 }

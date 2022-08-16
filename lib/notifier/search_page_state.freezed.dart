@@ -19,6 +19,7 @@ mixin _$SearchPageState {
   List<GitHubRepo>? get repos => throw _privateConstructorUsedError;
   int get nextPage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String? get lastSearchedWord => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -35,6 +36,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
       {List<GitHubRepo>? repos,
       int nextPage,
       bool isLoading,
+      String? lastSearchedWord,
       String? errorMessage});
 }
 
@@ -52,6 +54,7 @@ class _$SearchPageStateCopyWithImpl<$Res>
     Object? repos = freezed,
     Object? nextPage = freezed,
     Object? isLoading = freezed,
+    Object? lastSearchedWord = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -67,6 +70,10 @@ class _$SearchPageStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      lastSearchedWord: lastSearchedWord == freezed
+          ? _value.lastSearchedWord
+          : lastSearchedWord // ignore: cast_nullable_to_non_nullable
+              as String?,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -86,6 +93,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
       {List<GitHubRepo>? repos,
       int nextPage,
       bool isLoading,
+      String? lastSearchedWord,
       String? errorMessage});
 }
 
@@ -105,6 +113,7 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
     Object? repos = freezed,
     Object? nextPage = freezed,
     Object? isLoading = freezed,
+    Object? lastSearchedWord = freezed,
     Object? errorMessage = freezed,
   }) {
     return _then(_$_SearchPageState(
@@ -120,6 +129,10 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      lastSearchedWord: lastSearchedWord == freezed
+          ? _value.lastSearchedWord
+          : lastSearchedWord // ignore: cast_nullable_to_non_nullable
+              as String?,
       errorMessage: errorMessage == freezed
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -135,6 +148,7 @@ class _$_SearchPageState implements _SearchPageState {
       {final List<GitHubRepo>? repos = null,
       this.nextPage = 2,
       this.isLoading = false,
+      this.lastSearchedWord = null,
       this.errorMessage = null})
       : _repos = repos;
 
@@ -156,11 +170,14 @@ class _$_SearchPageState implements _SearchPageState {
   final bool isLoading;
   @override
   @JsonKey()
+  final String? lastSearchedWord;
+  @override
+  @JsonKey()
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'SearchPageState(repos: $repos, nextPage: $nextPage, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'SearchPageState(repos: $repos, nextPage: $nextPage, isLoading: $isLoading, lastSearchedWord: $lastSearchedWord, errorMessage: $errorMessage)';
   }
 
   @override
@@ -172,6 +189,8 @@ class _$_SearchPageState implements _SearchPageState {
             const DeepCollectionEquality().equals(other.nextPage, nextPage) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality()
+                .equals(other.lastSearchedWord, lastSearchedWord) &&
+            const DeepCollectionEquality()
                 .equals(other.errorMessage, errorMessage));
   }
 
@@ -181,6 +200,7 @@ class _$_SearchPageState implements _SearchPageState {
       const DeepCollectionEquality().hash(_repos),
       const DeepCollectionEquality().hash(nextPage),
       const DeepCollectionEquality().hash(isLoading),
+      const DeepCollectionEquality().hash(lastSearchedWord),
       const DeepCollectionEquality().hash(errorMessage));
 
   @JsonKey(ignore: true)
@@ -194,6 +214,7 @@ abstract class _SearchPageState implements SearchPageState {
       {final List<GitHubRepo>? repos,
       final int nextPage,
       final bool isLoading,
+      final String? lastSearchedWord,
       final String? errorMessage}) = _$_SearchPageState;
 
   @override
@@ -202,6 +223,8 @@ abstract class _SearchPageState implements SearchPageState {
   int get nextPage;
   @override
   bool get isLoading;
+  @override
+  String? get lastSearchedWord;
   @override
   String? get errorMessage;
   @override
