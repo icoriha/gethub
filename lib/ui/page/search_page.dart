@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 
 class SearchPage extends StatelessWidget {
@@ -42,23 +43,25 @@ class __BodyState extends ConsumerState<_Body> {
   @override
   Widget build(BuildContext context) {
     final pageState = ref.watch(searchPageNotifierProvider);
-    return Column(
+    return Stack(
       children: [
-        _SearchBar(controller: _notifier.searchBarTextController),
-        _SearchButton(onPressed: () => _notifier.search()),
-        Expanded(
-          child: pageState.when(
-            data: (repos) => ListView.builder(
-                controller: _scrollController,
-                itemCount: repos.length,
-                itemBuilder: (BuildContext context, int i) =>
-                    SizedBox(child: Text(repos[i].name))),
-
-            // TODO: ステータスコードに対応したエラーメッセージを表示する
-            error: (_, __) => Center(child: Text('エラーが発生しました')),
-            loading: () => const Center(child: CircularProgressIndicator()),
-          ),
-        )
+        Column(
+          children: [
+            _SearchBar(controller: _notifier.searchBarTextController),
+            _SearchButton(onPressed: () => _notifier.search()),
+            pageState.repos == null
+                ? const Center(child: Text('検索してください'))
+                : _RepoListView(
+                    pageState.repos!,
+                    scrollController: _scrollController,
+                  ),
+          ],
+        ),
+        pageState.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
@@ -67,6 +70,27 @@ class __BodyState extends ConsumerState<_Body> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+}
+
+class _RepoListView extends StatelessWidget {
+  const _RepoListView(
+    this.repos, {
+    Key? key,
+    required this.scrollController,
+  }) : super(key: key);
+  final List<GitHubRepo> repos;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+          controller: scrollController,
+          itemCount: repos.length,
+          itemBuilder: (BuildContext context, int i) =>
+              SizedBox(child: Text(repos[i].name))),
+    );
   }
 }
 
