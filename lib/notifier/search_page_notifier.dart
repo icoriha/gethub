@@ -19,7 +19,10 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      final repos = await _gitHubAPI.searchRepos(searchBarTextController.text);
+      final repos = await _gitHubAPI.searchRepos(
+        searchBarTextController.text,
+        page: 1,
+      );
       state = state.copyWith(repos: repos);
     } on Exception catch (e) {
       state = state.copyWith(errorMessage: e.toString());

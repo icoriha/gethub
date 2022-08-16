@@ -13,8 +13,11 @@ class GitHubAPI implements IGitHubAPI {
   static const url = 'https://api.github.com/search/repositories';
 
   @override
-  Future<List<GitHubRepo>> searchRepos(String searchWord, {int? page}) async {
-    final targetPage = page ?? 1;
+  Future<List<GitHubRepo>> searchRepos(
+    String searchWord, {
+    required int page,
+  }) async {
+    final targetPage = page;
     final httpClient = HttpClient();
     try {
       final query = '?q=$searchWord&per_page=100&page=$targetPage';
