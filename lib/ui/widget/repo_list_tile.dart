@@ -11,7 +11,8 @@ class RepoListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        child: ListTile(title: Text(repo.name)),
+        child:
+            ListTile(title: Text(repo.name, overflow: TextOverflow.ellipsis)),
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         elevation: 8,
         shadowColor: Colors.black38,
