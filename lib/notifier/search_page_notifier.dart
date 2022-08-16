@@ -27,7 +27,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
         searchWord,
         targetPage: 1,
       );
-      state = state.copyWith(repos: repos);
+      state = state.copyWith(repos: repos, lastSearchedWord: searchWord);
     } on Exception catch (e) {
       state = state.copyWith(errorMessage: e.toString());
     } finally {
@@ -39,11 +39,14 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     if (state.repos == null) return; // 初期状態ではスクロールしても何もしない
     if (state.repos!.isEmpty) return; // 検索結果が無い場合はスクロールしても何もしない
 
+    if (isBlank(state.lastSearchedWord)) return; // nullおよび空文字では検索しない
+    final lastSearchedWord = state.lastSearchedWord!;
+
     state = state.copyWith(isLoading: true);
 
     try {
       final nextRepos = await _gitHubAPI.searchRepos(
-        searchBarTextController.text,
+        lastSearchedWord,
         targetPage: state.nextPage,
       );
       if (nextRepos.isEmpty) {
