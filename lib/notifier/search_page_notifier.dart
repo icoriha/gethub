@@ -21,7 +21,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     try {
       final repos = await _gitHubAPI.searchRepos(
         searchBarTextController.text,
-        page: 1,
+        targetPage: 1,
       );
       state = state.copyWith(repos: repos);
     } on Exception catch (e) {
@@ -40,7 +40,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     try {
       final nextRepos = await _gitHubAPI.searchRepos(
         searchBarTextController.text,
-        page: state.nextPage,
+        targetPage: state.nextPage,
       );
       if (nextRepos.isEmpty) {
         print('すべての検索結果を取得しました');

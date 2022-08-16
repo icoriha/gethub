@@ -15,12 +15,12 @@ class GitHubAPI implements IGitHubAPI {
   @override
   Future<List<GitHubRepo>> searchRepos(
     String searchWord, {
-    required int page,
+    required int targetPage,
   }) async {
-    final targetPage = page;
+    final page = targetPage;
     final httpClient = HttpClient();
     try {
-      final query = '?q=$searchWord&per_page=100&page=$targetPage';
+      final query = '?q=$searchWord&per_page=100&page=$page';
 
       final request = await httpClient.getUrl(Uri.parse(url + query));
       final response = await request.close();
