@@ -13,15 +13,24 @@ class GitHubAPI implements IGitHubAPI {
   static const url = 'https://api.github.com/search/repositories';
 
   @override
-  Future<List<GitHubRepo>> searchRepos(String searchWord) async {
+  Future<List<GitHubRepo>> searchRepos(
+    String searchWord, {
+    required int targetPage,
+  }) async {
+    final page = targetPage;
     final httpClient = HttpClient();
     try {
-      final query = '?q=$searchWord&per_page=100';
+      final query = '?q=$searchWord&per_page=100&page=$page';
 
       final request = await httpClient.getUrl(Uri.parse(url + query));
       final response = await request.close();
       final content = await response.transform(utf8.decoder).join();
       final data = json.decode(content);
+
+      if (data['items'] == null) {
+        // itemsがnullの場合、Iterable型へのキャスト時に例外が発生するため防いでおく
+        return <GitHubRepo>[];
+      }
 
       final Iterable items = data['items'];
       final gitHubRepos = items

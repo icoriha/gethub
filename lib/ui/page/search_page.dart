@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 
 class SearchPage extends StatelessWidget {
@@ -14,30 +15,81 @@ class SearchPage extends StatelessWidget {
   }
 }
 
-class _Body extends ConsumerWidget {
+class _Body extends ConsumerStatefulWidget {
   const _Body({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(searchPageNotifierProvider.notifier);
-    final pageState = ref.watch(searchPageNotifierProvider);
-    return Column(
-      children: [
-        _SearchBar(controller: notifier.searchBarTextController),
-        _SearchButton(onPressed: () => notifier.search()),
-        Expanded(
-          child: pageState.when(
-            data: (repos) => ListView.builder(
-                itemCount: repos.length,
-                itemBuilder: (BuildContext context, int i) =>
-                    SizedBox(child: Text(repos[i].name))),
+  __BodyState createState() => __BodyState();
+}
 
-            // TODO: ステータスコードに対応したエラーメッセージを表示する
-            error: (_, __) => Center(child: Text('エラーが発生しました')),
-            loading: () => const Center(child: CircularProgressIndicator()),
-          ),
-        )
+class __BodyState extends ConsumerState<_Body> {
+  late ScrollController _scrollController;
+
+  SearchPageNotifier get _notifier =>
+      ref.read(searchPageNotifierProvider.notifier);
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.offset ==
+          _scrollController.position.maxScrollExtent) {
+        _notifier.onScrollEnd();
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pageState = ref.watch(searchPageNotifierProvider);
+    return Stack(
+      children: [
+        Column(
+          children: [
+            _SearchBar(controller: _notifier.searchBarTextController),
+            _SearchButton(onPressed: () => _notifier.search()),
+            pageState.repos == null
+                ? const Center(child: Text('検索してください'))
+                : _RepoListView(
+                    pageState.repos!,
+                    scrollController: _scrollController,
+                  ),
+          ],
+        ),
+        pageState.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : const SizedBox.shrink(),
       ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+}
+
+class _RepoListView extends StatelessWidget {
+  const _RepoListView(
+    this.repos, {
+    Key? key,
+    required this.scrollController,
+  }) : super(key: key);
+  final List<GitHubRepo> repos;
+  final ScrollController scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+          controller: scrollController,
+          itemCount: repos.length,
+          itemBuilder: (BuildContext context, int i) =>
+              SizedBox(child: Text(repos[i].name))),
     );
   }
 }
