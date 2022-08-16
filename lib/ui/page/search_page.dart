@@ -14,20 +14,42 @@ class SearchPage extends StatelessWidget {
   }
 }
 
-class _Body extends ConsumerWidget {
+class _Body extends ConsumerStatefulWidget {
   const _Body({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(searchPageNotifierProvider.notifier);
+  __BodyState createState() => __BodyState();
+}
+
+class __BodyState extends ConsumerState<_Body> {
+  late ScrollController _scrollController;
+
+  SearchPageNotifier get _notifier =>
+      ref.read(searchPageNotifierProvider.notifier);
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.offset ==
+          _scrollController.position.maxScrollExtent) {
+        _notifier.onScrollEnd();
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final pageState = ref.watch(searchPageNotifierProvider);
     return Column(
       children: [
-        _SearchBar(controller: notifier.searchBarTextController),
-        _SearchButton(onPressed: () => notifier.search()),
+        _SearchBar(controller: _notifier.searchBarTextController),
+        _SearchButton(onPressed: () => _notifier.search()),
         Expanded(
           child: pageState.when(
             data: (repos) => ListView.builder(
+                controller: _scrollController,
                 itemCount: repos.length,
                 itemBuilder: (BuildContext context, int i) =>
                     SizedBox(child: Text(repos[i].name))),
@@ -39,6 +61,12 @@ class _Body extends ConsumerWidget {
         )
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }
 

@@ -26,4 +26,8 @@ class SearchPageNotifier extends StateNotifier<AsyncValue<List<GitHubRepo>>> {
       state = AsyncError(e);
     }
   }
+
+  Future<void> onScrollEnd() async {
+    print('Scrolled to end!!');
+  }
 }
