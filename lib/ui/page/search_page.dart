@@ -23,7 +23,7 @@ class _Body extends ConsumerWidget {
     final pageState = ref.watch(searchPageNotifierProvider);
     return Column(
       children: [
-        _SearchBar(controller: notifier.searchTextController),
+        _SearchBar(controller: notifier.searchBarTextController),
         _SearchButton(onPressed: () => notifier.search()),
         Expanded(
           child: pageState.when(

@@ -14,13 +14,13 @@ class SearchPageNotifier extends StateNotifier<AsyncValue<List<GitHubRepo>>> {
       : super(const AsyncValue.data(<GitHubRepo>[]));
 
   final GitHubAPI _gitHubAPI;
-  final searchTextController = TextEditingController();
+  final searchBarTextController = TextEditingController();
 
   Future<void> search() async {
     state = const AsyncLoading();
 
     try {
-      final repos = await _gitHubAPI.searchRepos(searchTextController.text);
+      final repos = await _gitHubAPI.searchRepos(searchBarTextController.text);
       state = AsyncData(repos);
     } on Exception catch (e) {
       state = AsyncError(e);
