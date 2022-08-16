@@ -8,7 +8,7 @@ part 'search_page_state.freezed.dart';
 class SearchPageState with _$SearchPageState {
   const factory SearchPageState({
     @Default(null) List<GitHubRepo>? repos,
-    @Default(1) int currentPage,
+    @Default(2) int nextPage,
     @Default(false) bool isLoading,
     @Default(null) String? errorMessage,
   }) = _SearchPageState;

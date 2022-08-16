@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SearchPageState {
   List<GitHubRepo>? get repos => throw _privateConstructorUsedError;
-  int get currentPage => throw _privateConstructorUsedError;
+  int get nextPage => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -33,7 +33,7 @@ abstract class $SearchPageStateCopyWith<$Res> {
       _$SearchPageStateCopyWithImpl<$Res>;
   $Res call(
       {List<GitHubRepo>? repos,
-      int currentPage,
+      int nextPage,
       bool isLoading,
       String? errorMessage});
 }
@@ -50,7 +50,7 @@ class _$SearchPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? repos = freezed,
-    Object? currentPage = freezed,
+    Object? nextPage = freezed,
     Object? isLoading = freezed,
     Object? errorMessage = freezed,
   }) {
@@ -59,9 +59,9 @@ class _$SearchPageStateCopyWithImpl<$Res>
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
               as List<GitHubRepo>?,
-      currentPage: currentPage == freezed
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
+      nextPage: nextPage == freezed
+          ? _value.nextPage
+          : nextPage // ignore: cast_nullable_to_non_nullable
               as int,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -84,7 +84,7 @@ abstract class _$$_SearchPageStateCopyWith<$Res>
   @override
   $Res call(
       {List<GitHubRepo>? repos,
-      int currentPage,
+      int nextPage,
       bool isLoading,
       String? errorMessage});
 }
@@ -103,7 +103,7 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? repos = freezed,
-    Object? currentPage = freezed,
+    Object? nextPage = freezed,
     Object? isLoading = freezed,
     Object? errorMessage = freezed,
   }) {
@@ -112,9 +112,9 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
           ? _value._repos
           : repos // ignore: cast_nullable_to_non_nullable
               as List<GitHubRepo>?,
-      currentPage: currentPage == freezed
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
+      nextPage: nextPage == freezed
+          ? _value.nextPage
+          : nextPage // ignore: cast_nullable_to_non_nullable
               as int,
       isLoading: isLoading == freezed
           ? _value.isLoading
@@ -133,7 +133,7 @@ class __$$_SearchPageStateCopyWithImpl<$Res>
 class _$_SearchPageState implements _SearchPageState {
   const _$_SearchPageState(
       {final List<GitHubRepo>? repos = null,
-      this.currentPage = 1,
+      this.nextPage = 2,
       this.isLoading = false,
       this.errorMessage = null})
       : _repos = repos;
@@ -150,7 +150,7 @@ class _$_SearchPageState implements _SearchPageState {
 
   @override
   @JsonKey()
-  final int currentPage;
+  final int nextPage;
   @override
   @JsonKey()
   final bool isLoading;
@@ -160,7 +160,7 @@ class _$_SearchPageState implements _SearchPageState {
 
   @override
   String toString() {
-    return 'SearchPageState(repos: $repos, currentPage: $currentPage, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'SearchPageState(repos: $repos, nextPage: $nextPage, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -169,8 +169,7 @@ class _$_SearchPageState implements _SearchPageState {
         (other.runtimeType == runtimeType &&
             other is _$_SearchPageState &&
             const DeepCollectionEquality().equals(other._repos, _repos) &&
-            const DeepCollectionEquality()
-                .equals(other.currentPage, currentPage) &&
+            const DeepCollectionEquality().equals(other.nextPage, nextPage) &&
             const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality()
                 .equals(other.errorMessage, errorMessage));
@@ -180,7 +179,7 @@ class _$_SearchPageState implements _SearchPageState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_repos),
-      const DeepCollectionEquality().hash(currentPage),
+      const DeepCollectionEquality().hash(nextPage),
       const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(errorMessage));
 
@@ -193,14 +192,14 @@ class _$_SearchPageState implements _SearchPageState {
 abstract class _SearchPageState implements SearchPageState {
   const factory _SearchPageState(
       {final List<GitHubRepo>? repos,
-      final int currentPage,
+      final int nextPage,
       final bool isLoading,
       final String? errorMessage}) = _$_SearchPageState;
 
   @override
   List<GitHubRepo>? get repos;
   @override
-  int get currentPage;
+  int get nextPage;
   @override
   bool get isLoading;
   @override
