@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gethub/infra/api/github_api.dart';
 import 'package:gethub/notifier/search_page_state.dart';
+import 'package:quiver/strings.dart';
 
 final searchPageNotifierProvider =
     StateNotifierProvider<SearchPageNotifier, SearchPageState>(
@@ -16,11 +17,14 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
   final searchBarTextController = TextEditingController();
 
   Future<void> search() async {
+    final searchWord = searchBarTextController.text;
+    if (isBlank(searchWord)) return;
+
     state = state.copyWith(isLoading: true);
 
     try {
       final repos = await _gitHubAPI.searchRepos(
-        searchBarTextController.text,
+        searchWord,
         targetPage: 1,
       );
       state = state.copyWith(repos: repos);
