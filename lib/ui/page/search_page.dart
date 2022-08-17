@@ -70,12 +70,10 @@ class __BodyState extends ConsumerState<_Body> {
                 },
               ),
             ),
-            pageState.repos == null
-                ? const SizedBox.shrink()
-                : _RepoListView(
-                    pageState.repos!,
-                    scrollController: _scrollController,
-                  ),
+            _RepoListView(
+              pageState.repos,
+              scrollController: _scrollController,
+            ),
           ],
         ),
         pageState.isLoading
@@ -100,20 +98,25 @@ class _RepoListView extends StatelessWidget {
     Key? key,
     required this.scrollController,
   }) : super(key: key);
-  final List<GitHubRepo> repos;
+  final List<GitHubRepo>? repos;
   final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
+    if (repos == null) return const SizedBox.shrink();
+    if (repos!.isEmpty) {
+      return const Expanded(child: Center(child: Text('検索結果が見つかりませんでした')));
+    }
+
     return Expanded(
       child: ListView.builder(
         controller: scrollController,
-        itemCount: repos.length,
+        itemCount: repos!.length,
         itemBuilder: (BuildContext context, int i) {
           return RepoListTile(
-            repos[i],
+            repos![i],
             onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => DetailPage(repos[i])),
+              MaterialPageRoute(builder: (context) => DetailPage(repos![i])),
             ),
           );
         },
