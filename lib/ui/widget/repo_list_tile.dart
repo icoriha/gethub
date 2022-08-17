@@ -13,7 +13,7 @@ class RepoListTile extends StatelessWidget {
       child: Card(
         child:
             ListTile(title: Text(repo.name, overflow: TextOverflow.ellipsis)),
-        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         elevation: 8,
         shadowColor: Colors.black38,
       ),
