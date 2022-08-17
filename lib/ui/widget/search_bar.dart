@@ -17,6 +17,7 @@ class SearchBar extends StatelessWidget {
       autofocus: true,
       controller: controller,
       onSubmitted: onSubmitted,
+      maxLength: 80,
     );
   }
 }
