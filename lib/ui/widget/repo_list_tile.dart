@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:gethub/ui/page/detail_page.dart';
 
 class RepoListTile extends StatelessWidget {
-  const RepoListTile(this.repo, {Key? key, this.onTap}) : super(key: key);
+  const RepoListTile(this.repo, {Key? key}) : super(key: key);
   final GitHubRepo repo;
-  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => DetailPage(repo)),
+      ),
       child: Card(
         child:
             ListTile(title: Text(repo.name, overflow: TextOverflow.ellipsis)),

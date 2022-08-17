@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
-import 'package:gethub/ui/page/detail_page.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
 import 'package:gethub/ui/widget/search_bar.dart';
 
@@ -113,12 +112,7 @@ class _RepoListView extends StatelessWidget {
         controller: scrollController,
         itemCount: repos!.length,
         itemBuilder: (BuildContext context, int i) {
-          return RepoListTile(
-            repos![i],
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => DetailPage(repos![i])),
-            ),
-          );
+          return RepoListTile(repos![i]);
         },
       ),
     );
