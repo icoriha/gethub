@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gethub/foundation/app_colors.dart';
 import 'package:gethub/ui/page/search_page.dart';
 
 void main() {
@@ -17,9 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GetHub',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.from(
+        colorScheme: const ColorScheme.light(
+          background: AppColors.backGround,
+        ),
       ),
+      darkTheme: ThemeData.dark(),
       home: const SearchPage(),
     );
   }
