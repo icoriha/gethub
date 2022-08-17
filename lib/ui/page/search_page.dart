@@ -4,6 +4,7 @@ import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
 import 'package:gethub/ui/widget/search_bar.dart';
+import 'package:quiver/strings.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -64,8 +65,10 @@ class __BodyState extends ConsumerState<_Body> {
               child: SearchBar(
                 controller: _notifier.searchBarTextController,
                 onSubmitted: (_) {
-                  _resetScroll(); // 検索キー押下時にリストの先頭に戻しておく
-                  _notifier.search();
+                  if (isNotBlank(_notifier.searchBarTextController.text)) {
+                    _resetScroll(); // 検索キー押下時にリストの先頭に戻しておく
+                    _notifier.search();
+                  }
                 },
               ),
             ),
