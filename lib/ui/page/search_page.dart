@@ -49,8 +49,18 @@ class __BodyState extends ConsumerState<_Body> {
       children: [
         Column(
           children: [
-            _SearchBar(controller: _notifier.searchBarTextController),
-            _SearchButton(onPressed: () => _notifier.search()),
+            _SearchBar(
+              controller: _notifier.searchBarTextController,
+              onSubmitted: (_) {
+                // 検索キー押下時にリストの先頭に戻しておく
+                if (_scrollController.hasClients) {
+                  _scrollController.animateTo(0,
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.linear);
+                }
+                _notifier.search();
+              },
+            ),
             pageState.repos == null
                 ? const Center(child: Text('検索してください'))
                 : _RepoListView(
@@ -104,8 +114,10 @@ class _RepoListView extends StatelessWidget {
 }
 
 class _SearchBar extends StatelessWidget {
-  const _SearchBar({Key? key, required this.controller}) : super(key: key);
+  const _SearchBar({Key? key, required this.controller, this.onSubmitted})
+      : super(key: key);
   final TextEditingController controller;
+  final void Function(String)? onSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -113,26 +125,15 @@ class _SearchBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: SizedBox(
         height: 56,
-        child: TextField(
-          autofocus: true,
-          controller: controller,
+        child: Center(
+          child: TextField(
+            decoration: const InputDecoration(prefixIcon: Icon(Icons.search)),
+            textInputAction: TextInputAction.search,
+            autofocus: true,
+            controller: controller,
+            onSubmitted: onSubmitted,
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class _SearchButton extends StatelessWidget {
-  const _SearchButton({Key? key, required this.onPressed}) : super(key: key);
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: TextButton(
-        onPressed: onPressed,
-        child: const Text('検索'),
       ),
     );
   }
