@@ -4,6 +4,7 @@ import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 import 'package:gethub/ui/page/detail_page.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
+import 'package:gethub/ui/widget/search_bar.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -30,6 +31,16 @@ class __BodyState extends ConsumerState<_Body> {
   SearchPageNotifier get _notifier =>
       ref.read(searchPageNotifierProvider.notifier);
 
+  void _resetScroll() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+    }
+  }
+
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -49,20 +60,18 @@ class __BodyState extends ConsumerState<_Body> {
       children: [
         Column(
           children: [
-            _SearchBar(
-              controller: _notifier.searchBarTextController,
-              onSubmitted: (_) {
-                // 検索キー押下時にリストの先頭に戻しておく
-                if (_scrollController.hasClients) {
-                  _scrollController.animateTo(0,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.linear);
-                }
-                _notifier.search();
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: SearchBar(
+                controller: _notifier.searchBarTextController,
+                onSubmitted: (_) {
+                  _resetScroll(); // 検索キー押下時にリストの先頭に戻しておく
+                  _notifier.search();
+                },
+              ),
             ),
             pageState.repos == null
-                ? const Center(child: Text('検索してください'))
+                ? const SizedBox.shrink()
                 : _RepoListView(
                     pageState.repos!,
                     scrollController: _scrollController,
@@ -108,32 +117,6 @@ class _RepoListView extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _SearchBar extends StatelessWidget {
-  const _SearchBar({Key? key, required this.controller, this.onSubmitted})
-      : super(key: key);
-  final TextEditingController controller;
-  final void Function(String)? onSubmitted;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        height: 56,
-        child: Center(
-          child: TextField(
-            decoration: const InputDecoration(prefixIcon: Icon(Icons.search)),
-            textInputAction: TextInputAction.search,
-            autofocus: true,
-            controller: controller,
-            onSubmitted: onSubmitted,
-          ),
-        ),
       ),
     );
   }
