@@ -20,7 +20,8 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     final searchWord = searchBarTextController.text;
     if (isBlank(searchWord)) return;
 
-    state = state.copyWith(isLoading: true);
+    // 検索が成功した場合でもページは1に戻るためnextPageは初期値に戻しておく
+    state = state.copyWith(isLoading: true, nextPage: 2);
 
     try {
       final repos = await _gitHubAPI.searchRepos(
@@ -36,6 +37,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
   }
 
   Future<void> onScrollEnd() async {
+    if (state.isLoading) return; // ローディング中は何もしない
     if (state.repos == null) return; // 初期状態ではスクロールしても何もしない
     if (state.repos!.isEmpty) return; // 検索結果が無い場合はスクロールしても何もしない
 
