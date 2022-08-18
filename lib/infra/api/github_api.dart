@@ -2,14 +2,13 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gethub/domain/i_api/i_github_api.dart';
 import 'package:gethub/foundation/typedefs.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/infra/entity/github_repo_entity.dart';
 
 final gitHubAPIProvider = Provider.autoDispose(((_) => GitHubAPI()));
 
-class GitHubAPI implements IGitHubAPI {
+class GitHubAPI {
   static const url = 'https://api.github.com/search/repositories';
 
   @override
