@@ -9,7 +9,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(repo.name)),
+      appBar: AppBar(title: Text(repo.name, overflow: TextOverflow.ellipsis,)),
       body: SafeArea(
         child: Center(
           child: Column(
