@@ -27,6 +27,14 @@ class DetailPage extends StatelessWidget {
 class _RepoDetailCard extends StatelessWidget {
   const _RepoDetailCard(this.repo, {Key? key}) : super(key: key);
 
+  TextStyle get _projectNameStyle =>
+      const TextStyle(fontSize: 24, overflow: TextOverflow.ellipsis);
+  TextStyle get _projecLanguageStyle => const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.black38,
+      );
+
   BoxDecoration get _decoration => BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -57,19 +65,14 @@ class _RepoDetailCard extends StatelessWidget {
                       children: [
                         Text(
                           repo.name,
-                          style: const TextStyle(fontSize: 24),
+                          style: _projectNameStyle,
                           maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 2),
                           child: Text(
                             repo.projectLanguage,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black38,
-                            ),
+                            style: _projecLanguageStyle,
                           ),
                         ),
                       ],
@@ -122,24 +125,27 @@ class _CountArea extends StatelessWidget {
   final String label;
   final int count;
 
+  TextStyle get _labelStyle => const TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.bold,
+        color: Colors.black38,
+      );
+
+  TextStyle get _countStyle => const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: Colors.black87,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       child: Column(
         children: [
-          Text(label,
-              style: TextStyle(
-                color: Colors.black38,
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-              )),
-          SizedBox(height: 2),
-          Text(count.toString(),
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold)),
+          Text(label, style: _labelStyle),
+          const SizedBox(height: 2),
+          Text(count.toString(), style: _countStyle),
         ],
       ),
     );
