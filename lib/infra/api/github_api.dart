@@ -11,7 +11,6 @@ final gitHubAPIProvider = Provider.autoDispose(((_) => GitHubAPI()));
 class GitHubAPI {
   static const url = 'https://api.github.com/search/repositories';
 
-  @override
   Future<List<GitHubRepo>> searchRepos(
     String searchWord, {
     required int targetPage,
