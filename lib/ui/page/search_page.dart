@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
-import 'package:gethub/ui/page/detail_page.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
+import 'package:gethub/ui/widget/search_bar.dart';
+import 'package:quiver/strings.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -30,6 +31,16 @@ class __BodyState extends ConsumerState<_Body> {
   SearchPageNotifier get _notifier =>
       ref.read(searchPageNotifierProvider.notifier);
 
+  void _resetScroll() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+    }
+  }
+
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -49,26 +60,23 @@ class __BodyState extends ConsumerState<_Body> {
       children: [
         Column(
           children: [
-            _SearchBar(
-              controller: _notifier.searchBarTextController,
-              onSubmitted: (_) {
-                // 検索キー押下時にリストの先頭に戻しておく
-                if (_scrollController.hasClients) {
-                  _scrollController.animateTo(0,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.linear);
-                }
-                _notifier.search();
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: SearchBar(
+                controller: _notifier.searchBarTextController,
+                onSubmitted: (_) {
+                  if (isNotBlank(_notifier.searchBarTextController.text)) {
+                    _resetScroll(); // 検索キー押下時にスクロールを初期位置に戻す
+                    _notifier.search();
+                  }
+                },
+              ),
             ),
-            (pageState.errorMessage == null)
-                ? pageState.repos == null
-                    ? const Center(child: Text('検索してください'))
-                    : _RepoListView(
-                        pageState.repos!,
-                        scrollController: _scrollController,
-                      )
-                : Expanded(child: Center(child: Text(pageState.errorMessage!))),
+            _RepoListView(
+              pageState.repos,
+              scrollController: _scrollController,
+              errorMessage: pageState.errorMessage,
+            ),
           ],
         ),
         pageState.isLoading
@@ -92,51 +100,47 @@ class _RepoListView extends StatelessWidget {
     this.repos, {
     Key? key,
     required this.scrollController,
+    this.errorMessage,
   }) : super(key: key);
-  final List<GitHubRepo> repos;
+  final List<GitHubRepo>? repos;
   final ScrollController scrollController;
+  final String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
+    if (errorMessage != null) return _ErrorWidget(errorMessage!); // エラーの場合
+    if (repos == null) return const SizedBox.shrink(); // 検索前の初期状態
+    if (repos!.isEmpty) return const _EmptyReposWidget(); // 検索結果がなかった場合
+
     return Expanded(
       child: ListView.builder(
         controller: scrollController,
-        itemCount: repos.length,
+        itemCount: repos!.length,
         itemBuilder: (BuildContext context, int i) {
-          return RepoListTile(
-            repos[i],
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => DetailPage(repos[i])),
-            ),
-          );
+          return RepoListTile(repos![i]);
         },
       ),
     );
   }
 }
 
-class _SearchBar extends StatelessWidget {
-  const _SearchBar({Key? key, required this.controller, this.onSubmitted})
-      : super(key: key);
-  final TextEditingController controller;
-  final void Function(String)? onSubmitted;
+class _ErrorWidget extends StatelessWidget {
+  const _ErrorWidget(this.errorMessage, {Key? key}) : super(key: key);
+  final String errorMessage;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        height: 56,
-        child: Center(
-          child: TextField(
-            decoration: const InputDecoration(prefixIcon: Icon(Icons.search)),
-            textInputAction: TextInputAction.search,
-            autofocus: true,
-            controller: controller,
-            onSubmitted: onSubmitted,
-          ),
-        ),
-      ),
-    );
+    final label =
+        (errorMessage.isEmpty) ? 'An Error has occured' : errorMessage;
+    return Expanded(child: Center(child: Text(label)));
+  }
+}
+
+class _EmptyReposWidget extends StatelessWidget {
+  const _EmptyReposWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Expanded(child: Center(child: Text('検索結果が見つかりませんでした')));
   }
 }
