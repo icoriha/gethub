@@ -75,6 +75,7 @@ class __BodyState extends ConsumerState<_Body> {
             _RepoListView(
               pageState.repos,
               scrollController: _scrollController,
+              errorMessage: pageState.errorMessage,
             ),
           ],
         ),
@@ -99,16 +100,17 @@ class _RepoListView extends StatelessWidget {
     this.repos, {
     Key? key,
     required this.scrollController,
+    this.errorMessage,
   }) : super(key: key);
   final List<GitHubRepo>? repos;
   final ScrollController scrollController;
+  final String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
-    if (repos == null) return const SizedBox.shrink();
-    if (repos!.isEmpty) {
-      return const Expanded(child: Center(child: Text('検索結果が見つかりませんでした')));
-    }
+    if (errorMessage != null) return _ErrorWidget(errorMessage!); // エラーの場合
+    if (repos == null) return const SizedBox.shrink(); // 検索前の初期状態
+    if (repos!.isEmpty) return const _EmptyReposWidget(); // 検索結果がなかった場合
 
     return Expanded(
       child: ListView.builder(
@@ -119,5 +121,26 @@ class _RepoListView extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class _ErrorWidget extends StatelessWidget {
+  const _ErrorWidget(this.errorMessage, {Key? key}) : super(key: key);
+  final String errorMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    final label =
+        (errorMessage.isEmpty) ? 'An Error has occured' : errorMessage;
+    return Expanded(child: Center(child: Text(label)));
+  }
+}
+
+class _EmptyReposWidget extends StatelessWidget {
+  const _EmptyReposWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Expanded(child: Center(child: Text('検索結果が見つかりませんでした')));
   }
 }
