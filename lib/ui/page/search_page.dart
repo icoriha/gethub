@@ -66,7 +66,7 @@ class __BodyState extends ConsumerState<_Body> {
                 controller: _notifier.searchBarTextController,
                 onSubmitted: (_) {
                   if (isNotBlank(_notifier.searchBarTextController.text)) {
-                    _resetScroll(); // 検索キー押下時にリストの先頭に戻しておく
+                    _resetScroll(); // 検索キー押下時にスクロールを初期位置に戻す
                     _notifier.search();
                   }
                 },
