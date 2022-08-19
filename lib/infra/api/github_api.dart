@@ -6,9 +6,9 @@ import 'package:gethub/foundation/typedefs.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/infra/entity/github_repo_entity.dart';
 
-final gitHubAPIProvider = Provider.autoDispose(((_) => GitHubAPI()));
+final gitHubApiProvider = Provider.autoDispose(((_) => GitHubApi()));
 
-class GitHubAPI {
+class GitHubApi {
   static const url = 'https://api.github.com/search/repositories';
 
   Future<List<GitHubRepo>> searchRepos(

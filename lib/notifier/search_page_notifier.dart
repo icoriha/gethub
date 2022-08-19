@@ -9,12 +9,12 @@ import 'package:quiver/strings.dart';
 
 final searchPageNotifierProvider =
     StateNotifierProvider<SearchPageNotifier, SearchPageState>(
-        (ref) => SearchPageNotifier(ref.read(gitHubAPIProvider)));
+        (ref) => SearchPageNotifier(ref.read(gitHubApiProvider)));
 
 class SearchPageNotifier extends StateNotifier<SearchPageState> {
-  SearchPageNotifier(this._gitHubAPI) : super(const SearchPageState());
+  SearchPageNotifier(this._gitHubApi) : super(const SearchPageState());
 
-  final GitHubAPI _gitHubAPI;
+  final GitHubApi _gitHubApi;
   final searchBarTextController = TextEditingController();
 
   Future<void> search() async {
@@ -25,7 +25,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     state = state.copyWith(isLoading: true, nextPage: 2, errorMessage: null);
 
     try {
-      final repos = await _gitHubAPI.searchRepos(
+      final repos = await _gitHubApi.searchRepos(
         searchWord,
         targetPage: 1,
       );
@@ -50,7 +50,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      final nextRepos = await _gitHubAPI.searchRepos(
+      final nextRepos = await _gitHubApi.searchRepos(
         lastSearchedWord,
         targetPage: state.nextPage,
       );
