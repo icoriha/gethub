@@ -9,13 +9,19 @@ import 'package:quiver/strings.dart';
 
 final searchPageNotifierProvider =
     StateNotifierProvider<SearchPageNotifier, SearchPageState>(
-        (ref) => SearchPageNotifier(ref.read(gitHubApiProvider)));
+        (ref) => SearchPageNotifier(
+              ref.read(gitHubApiProvider),
+              TextEditingController(),
+            ));
 
 class SearchPageNotifier extends StateNotifier<SearchPageState> {
-  SearchPageNotifier(this._gitHubApi) : super(const SearchPageState());
+  SearchPageNotifier(
+    this._gitHubApi,
+    this.searchBarTextController,
+  ) : super(const SearchPageState());
 
   final GitHubApi _gitHubApi;
-  final searchBarTextController = TextEditingController();
+  final TextEditingController searchBarTextController;
 
   Future<void> search() async {
     final searchWord = searchBarTextController.text;
