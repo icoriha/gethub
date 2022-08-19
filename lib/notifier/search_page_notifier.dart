@@ -2,18 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gethub/foundation/exceptions.dart';
 import 'package:gethub/infra/api/github_api.dart';
 import 'package:gethub/notifier/search_page_state.dart';
 import 'package:quiver/strings.dart';
 
 final searchPageNotifierProvider =
     StateNotifierProvider<SearchPageNotifier, SearchPageState>(
-        (ref) => SearchPageNotifier(ref.read(gitHubAPIProvider)));
+        (ref) => SearchPageNotifier(ref.read(gitHubApiProvider)));
 
 class SearchPageNotifier extends StateNotifier<SearchPageState> {
-  SearchPageNotifier(this._gitHubAPI) : super(const SearchPageState());
+  SearchPageNotifier(this._gitHubApi) : super(const SearchPageState());
 
-  final GitHubAPI _gitHubAPI;
+  final GitHubApi _gitHubApi;
   final searchBarTextController = TextEditingController();
 
   Future<void> search() async {
@@ -21,16 +22,18 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     if (isBlank(searchWord)) return;
 
     // 検索が成功した場合でもページは1に戻るためnextPageは初期値に戻しておく
-    state = state.copyWith(isLoading: true, nextPage: 2);
+    state = state.copyWith(isLoading: true, nextPage: 2, errorMessage: null);
 
     try {
-      final repos = await _gitHubAPI.searchRepos(
+      final repos = await _gitHubApi.searchRepos(
         searchWord,
         targetPage: 1,
       );
       state = state.copyWith(repos: repos, lastSearchedWord: searchWord);
-    } on Exception catch (e) {
+    } on HttpResponceException catch (e) {
       state = state.copyWith(errorMessage: e.toString());
+    } on Exception catch (_) {
+      state = state.copyWith(errorMessage: 'An error has occured');
     } finally {
       state = state.copyWith(isLoading: false);
     }
@@ -47,7 +50,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     state = state.copyWith(isLoading: true);
 
     try {
-      final nextRepos = await _gitHubAPI.searchRepos(
+      final nextRepos = await _gitHubApi.searchRepos(
         lastSearchedWord,
         targetPage: state.nextPage,
       );
@@ -61,8 +64,10 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
         nextPage: state.nextPage + 1,
       );
       print('リポジトリを${nextRepos.length}件追加');
-    } on Exception catch (e) {
+    } on HttpResponceException catch (e) {
       state = state.copyWith(errorMessage: e.toString());
+    } on Exception catch (_) {
+      state = state.copyWith(errorMessage: 'An error has occured');
     } finally {
       state = state.copyWith(isLoading: false);
     }

@@ -61,12 +61,14 @@ class __BodyState extends ConsumerState<_Body> {
                 _notifier.search();
               },
             ),
-            pageState.repos == null
-                ? const Center(child: Text('検索してください'))
-                : _RepoListView(
-                    pageState.repos!,
-                    scrollController: _scrollController,
-                  ),
+            (pageState.errorMessage == null)
+                ? pageState.repos == null
+                    ? const Center(child: Text('検索してください'))
+                    : _RepoListView(
+                        pageState.repos!,
+                        scrollController: _scrollController,
+                      )
+                : Expanded(child: Center(child: Text(pageState.errorMessage!))),
           ],
         ),
         pageState.isLoading
