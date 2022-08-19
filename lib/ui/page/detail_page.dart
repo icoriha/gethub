@@ -9,20 +9,92 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(repo.name, overflow: TextOverflow.ellipsis,)),
+      appBar: AppBar(),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _Avatar(repo.ownerAvatarUrl),
-              Text(repo.projectLanguage),
-              Text('Star: ${repo.starsCount}'),
-              Text('Watcher: ${repo.watchersCount}'),
-              Text('Fork: ${repo.forksCount}'),
-              Text('Issue: ${repo.openIssuesCount}'),
-            ],
-          ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: _RepoDetailCard(repo),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RepoDetailCard extends StatelessWidget {
+  const _RepoDetailCard(this.repo, {Key? key}) : super(key: key);
+
+  BoxDecoration get _decoration => BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(
+                color: Colors.black12, blurRadius: 24, offset: Offset(0, 8))
+          ]);
+
+  final GitHubRepo repo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: _decoration,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Row(
+                children: [
+                  _Avatar(repo.ownerAvatarUrl),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          repo.name,
+                          style: const TextStyle(fontSize: 24),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 2),
+                          child: Text(
+                            repo.projectLanguage,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black38,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Divider(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _CountArea('Star', repo.starsCount),
+                  _CountArea('Watcher', repo.watchersCount),
+                  _CountArea('Fork', repo.forksCount),
+                  _CountArea('Issue', repo.openIssuesCount),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -41,6 +113,35 @@ class _Avatar extends StatelessWidget {
     return CircleAvatar(
       radius: 32,
       backgroundImage: NetworkImage(iconUrl),
+    );
+  }
+}
+
+class _CountArea extends StatelessWidget {
+  const _CountArea(this.label, this.count, {Key? key}) : super(key: key);
+  final String label;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: [
+          Text(label,
+              style: TextStyle(
+                color: Colors.black38,
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+              )),
+          SizedBox(height: 2),
+          Text(count.toString(),
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold)),
+        ],
+      ),
     );
   }
 }
