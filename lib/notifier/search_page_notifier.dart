@@ -17,14 +17,14 @@ final searchPageNotifierProvider =
 class SearchPageNotifier extends StateNotifier<SearchPageState> {
   SearchPageNotifier(
     this._gitHubApi,
-    this.searchBarTextController,
+    this.searchFieldTextController,
   ) : super(const SearchPageState());
 
   final GitHubApi _gitHubApi;
-  final TextEditingController searchBarTextController;
+  final TextEditingController searchFieldTextController;
 
   Future<void> search() async {
-    final searchWord = searchBarTextController.text;
+    final searchWord = searchFieldTextController.text;
     if (isBlank(searchWord)) return;
 
     // 検索が成功した場合でもページは1に戻るためnextPageは初期値に戻しておく

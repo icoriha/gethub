@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
-import 'package:gethub/ui/widget/search_bar.dart';
+import 'package:gethub/ui/widget/search_field.dart';
 import 'package:quiver/strings.dart';
 
 class SearchPage extends StatelessWidget {
@@ -63,10 +63,10 @@ class __BodyState extends ConsumerState<_Body> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: SearchBar(
-                controller: _notifier.searchBarTextController,
+              child: SearchField(
+                controller: _notifier.searchFieldTextController,
                 onSubmitted: (_) {
-                  if (isNotBlank(_notifier.searchBarTextController.text)) {
+                  if (isNotBlank(_notifier.searchFieldTextController.text)) {
                     _resetScroll(); // 検索キー押下時にスクロールを初期位置に戻す
                     _notifier.search();
                   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key, required this.controller, this.onSubmitted})
+class SearchField extends StatelessWidget {
+  const SearchField({Key? key, required this.controller, this.onSubmitted})
       : super(key: key);
   final TextEditingController controller;
   final void Function(String)? onSubmitted;
@@ -14,12 +14,13 @@ class SearchBar extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: l10n.searchRepositories,
+        counterText: '',
       ),
       textInputAction: TextInputAction.search,
       autofocus: true,
       controller: controller,
       onSubmitted: onSubmitted,
-      maxLength: 80,
+      maxLength: 300,
     );
   }
 }
