@@ -10,3 +10,9 @@
 |-|-|-|-|
 |![search_light_ios](https://user-images.githubusercontent.com/56757293/185748612-a3528230-7015-4a59-abb7-ed8d4d46e143.png)|![detail_light_ios](https://user-images.githubusercontent.com/56757293/185748619-26a4b586-7944-4b64-8f39-a456986dd47c.png)|![search_dark_ios](https://user-images.githubusercontent.com/56757293/185748625-0a26ac08-508b-4174-8fb3-00cf6fe6f37a.png)|![detail_dark_ios](https://user-images.githubusercontent.com/56757293/185748630-0d857d31-f3cb-469a-8ed8-fd5aad317cce.png)|
 
+## 環境
+Android、iOSともに
+開発環境と本番環境の2種類を用意した
+|Android|iOS|
+|-|-|
+|<img width="122" alt="dev_prod_android" src="https://user-images.githubusercontent.com/56757293/185749088-ca588d88-75e0-49b5-a2b2-7c4ecaa3ae0a.png">|<img width="185" alt="dev_prod_ios" src="https://user-images.githubusercontent.com/56757293/185749117-fd87ca06-40aa-47cf-83b1-94bdf9d374ef.png">|
