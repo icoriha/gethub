@@ -13,16 +13,10 @@ class AppThemeNotifier extends StateNotifier<AppThemeState> {
   final AppThemeRepository _repository;
 
   Future<void> _init() async {
-    state = state.copyWith(isLoading: true);
     final isDevice = await _repository.getIsDeviceValue();
     final isDark = await _repository.getIsDarkValue();
 
-    state = state.copyWith(
-      isDevice: isDevice,
-      isDark: isDark,
-      isLoading: false,
-    );
-    state = state.copyWith(isLoading: false);
+    state = state.copyWith(isDevice: isDevice, isDark: isDark);
   }
 
   void toggleIsDevice() {

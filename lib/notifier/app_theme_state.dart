@@ -6,7 +6,6 @@ part 'app_theme_state.freezed.dart';
 @freezed
 class AppThemeState with _$AppThemeState {
   const factory AppThemeState({
-    @Default(false) bool isLoading,
     @Default(true) bool isDevice,
     @Default(false) bool isDark,
   }) = _AppThemeState;

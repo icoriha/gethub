@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppThemeState {
-  bool get isLoading => throw _privateConstructorUsedError;
   bool get isDevice => throw _privateConstructorUsedError;
   bool get isDark => throw _privateConstructorUsedError;
 
@@ -30,7 +29,7 @@ abstract class $AppThemeStateCopyWith<$Res> {
   factory $AppThemeStateCopyWith(
           AppThemeState value, $Res Function(AppThemeState) then) =
       _$AppThemeStateCopyWithImpl<$Res>;
-  $Res call({bool isLoading, bool isDevice, bool isDark});
+  $Res call({bool isDevice, bool isDark});
 }
 
 /// @nodoc
@@ -44,15 +43,10 @@ class _$AppThemeStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? isLoading = freezed,
     Object? isDevice = freezed,
     Object? isDark = freezed,
   }) {
     return _then(_value.copyWith(
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
       isDevice: isDevice == freezed
           ? _value.isDevice
           : isDevice // ignore: cast_nullable_to_non_nullable
@@ -72,7 +66,7 @@ abstract class _$$_AppThemeStateCopyWith<$Res>
           _$_AppThemeState value, $Res Function(_$_AppThemeState) then) =
       __$$_AppThemeStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool isLoading, bool isDevice, bool isDark});
+  $Res call({bool isDevice, bool isDark});
 }
 
 /// @nodoc
@@ -88,15 +82,10 @@ class __$$_AppThemeStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? isLoading = freezed,
     Object? isDevice = freezed,
     Object? isDark = freezed,
   }) {
     return _then(_$_AppThemeState(
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
       isDevice: isDevice == freezed
           ? _value.isDevice
           : isDevice // ignore: cast_nullable_to_non_nullable
@@ -112,12 +101,8 @@ class __$$_AppThemeStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AppThemeState with DiagnosticableTreeMixin implements _AppThemeState {
-  const _$_AppThemeState(
-      {this.isLoading = false, this.isDevice = true, this.isDark = false});
+  const _$_AppThemeState({this.isDevice = true, this.isDark = false});
 
-  @override
-  @JsonKey()
-  final bool isLoading;
   @override
   @JsonKey()
   final bool isDevice;
@@ -127,7 +112,7 @@ class _$_AppThemeState with DiagnosticableTreeMixin implements _AppThemeState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppThemeState(isLoading: $isLoading, isDevice: $isDevice, isDark: $isDark)';
+    return 'AppThemeState(isDevice: $isDevice, isDark: $isDark)';
   }
 
   @override
@@ -135,7 +120,6 @@ class _$_AppThemeState with DiagnosticableTreeMixin implements _AppThemeState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'AppThemeState'))
-      ..add(DiagnosticsProperty('isLoading', isLoading))
       ..add(DiagnosticsProperty('isDevice', isDevice))
       ..add(DiagnosticsProperty('isDark', isDark));
   }
@@ -145,7 +129,6 @@ class _$_AppThemeState with DiagnosticableTreeMixin implements _AppThemeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppThemeState &&
-            const DeepCollectionEquality().equals(other.isLoading, isLoading) &&
             const DeepCollectionEquality().equals(other.isDevice, isDevice) &&
             const DeepCollectionEquality().equals(other.isDark, isDark));
   }
@@ -153,7 +136,6 @@ class _$_AppThemeState with DiagnosticableTreeMixin implements _AppThemeState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(isLoading),
       const DeepCollectionEquality().hash(isDevice),
       const DeepCollectionEquality().hash(isDark));
 
@@ -164,13 +146,9 @@ class _$_AppThemeState with DiagnosticableTreeMixin implements _AppThemeState {
 }
 
 abstract class _AppThemeState implements AppThemeState {
-  const factory _AppThemeState(
-      {final bool isLoading,
-      final bool isDevice,
-      final bool isDark}) = _$_AppThemeState;
+  const factory _AppThemeState({final bool isDevice, final bool isDark}) =
+      _$_AppThemeState;
 
-  @override
-  bool get isLoading;
   @override
   bool get isDevice;
   @override
