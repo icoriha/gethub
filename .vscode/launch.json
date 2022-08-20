@@ -4,13 +4,19 @@
         {
             "name": "gethub",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--dart-define=FLAVOR=dev"
+            ]
         },
         {
             "name": "gethub (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "--dart-define=FLAVOR=prod"
+            ]
         }
     ]
 }
