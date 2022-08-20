@@ -1,5 +1,11 @@
 # GetHub
 
+## はじめに
+issue数、watcher数の表示には[Search API](https://docs.github.com/ja/rest/reference/search#search-repositories)のレスポンスに含まれる「open_issues_count」および「watchers_count」を用いたが、  
+実装中これらから得られる値がブラウザから確認できる値と異なることに気づいた。  
+Search APIを利用する条件の範疇で修正しようとしたが、期限内に修正できる目処がつかなかったため保留とした。  
+関連issue: [#50](https://github.com/icoriha/gethub/issues/50)
+
 ## Android
 |検索ページ（Light）|詳細ページ（Light）|検索ページ（Dark）|詳細ページ（Dark）|
 |-|-|-|-|
@@ -41,3 +47,9 @@ flutter run --dart-define=FLAVOR=prod
 ```
 make run-prod
 ```
+
+## アーキテクチャ
+Presentation層をMVVMとしたクリーンアーキテクチャベース。  
+Flutterプロジェクトとしては、Freezed + Riverpod + StateNotifierを用いた構成になっている。  
+ViewModelはStateNotifierを継承したクラス（HogePageNotifeirと命名）とし、その状態はFreezedで生成する。  
+APIとの通信処理は検索結果の取得のみであり、UseCaseは必要性を感じなかったため採用していない。
