@@ -39,7 +39,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     } on HttpResponceException catch (e) {
       state = state.copyWith(errorMessage: e.toString());
     } on Exception catch (_) {
-      state = state.copyWith(errorMessage: 'An error has occured');
+      state = state.copyWith(errorMessage: '');
     } finally {
       state = state.copyWith(isLoading: false);
     }
@@ -73,7 +73,7 @@ class SearchPageNotifier extends StateNotifier<SearchPageState> {
     } on HttpResponceException catch (e) {
       state = state.copyWith(errorMessage: e.toString());
     } on Exception catch (_) {
-      state = state.copyWith(errorMessage: 'An error has occured');
+      state = state.copyWith(errorMessage: '');
     } finally {
       state = state.copyWith(isLoading: false);
     }
