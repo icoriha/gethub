@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:gethub/foundation/is_dark_mode.dart';
 import 'package:quiver/strings.dart';
 
 class DetailPage extends StatelessWidget {
@@ -27,28 +28,22 @@ class DetailPage extends StatelessWidget {
 class _RepoDetailCard extends StatelessWidget {
   const _RepoDetailCard(this.repo, {Key? key}) : super(key: key);
 
-  TextStyle get _projectNameStyle =>
-      const TextStyle(fontSize: 24, overflow: TextOverflow.ellipsis);
-  TextStyle get _projecLanguageStyle => const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.black38,
-      );
-
-  BoxDecoration get _decoration => BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(
-                color: Colors.black12, blurRadius: 24, offset: Offset(0, 8))
-          ]);
+  BoxDecoration _decoration(BuildContext context) => BoxDecoration(
+      color: Theme.of(context).cardColor,
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: isDarkMode(context)
+          ? null
+          : const [
+              BoxShadow(
+                  color: Colors.black12, blurRadius: 24, offset: Offset(0, 8))
+            ]);
 
   final GitHubRepo repo;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _decoration,
+      decoration: _decoration(context),
       child: SizedBox(
         width: double.infinity,
         child: Column(
@@ -65,15 +60,13 @@ class _RepoDetailCard extends StatelessWidget {
                       children: [
                         Text(
                           repo.name,
-                          style: _projectNameStyle,
+                          style: Theme.of(context).textTheme.headline1,
                           maxLines: 2,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 2),
-                          child: Text(
-                            repo.projectLanguage,
-                            style: _projecLanguageStyle,
-                          ),
+                          child: Text(repo.projectLanguage,
+                              style: Theme.of(context).textTheme.headline2),
                         ),
                       ],
                     ),
@@ -81,10 +74,11 @@ class _RepoDetailCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Divider(),
-            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Divider(
+                  color: isDarkMode(context) ? Colors.transparent : null),
+            ), // LightModeの場合のみDividerが見えるようにする
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -125,27 +119,15 @@ class _CountArea extends StatelessWidget {
   final String label;
   final int count;
 
-  TextStyle get _labelStyle => const TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.bold,
-        color: Colors.black38,
-      );
-
-  TextStyle get _countStyle => const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        color: Colors.black87,
-      );
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Column(
         children: [
-          Text(label, style: _labelStyle),
+          Text(label, style: Theme.of(context).textTheme.headline3),
           const SizedBox(height: 2),
-          Text(count.toString(), style: _countStyle),
+          Text(count.toString(), style: Theme.of(context).textTheme.headline4),
         ],
       ),
     );

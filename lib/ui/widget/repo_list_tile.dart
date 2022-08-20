@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:gethub/foundation/is_dark_mode.dart';
 import 'package:gethub/ui/page/detail_page.dart';
 
 class RepoListTile extends StatelessWidget {
@@ -17,7 +18,7 @@ class RepoListTile extends StatelessWidget {
             ListTile(title: Text(repo.name, overflow: TextOverflow.ellipsis)),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         elevation: 8,
-        shadowColor: Colors.black38,
+        shadowColor: isDarkMode(context) ? Colors.transparent : Colors.black38,
       ),
     );
   }

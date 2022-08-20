@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:gethub/foundation/app_colors.dart';
+import 'package:gethub/foundation/app_themes.dart';
 import 'package:gethub/ui/page/search_page.dart';
 
 void main() {
@@ -20,12 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GetHub',
-      theme: ThemeData.from(
-        colorScheme: const ColorScheme.light(
-          background: AppColors.backGround,
-        ),
-      ),
-      darkTheme: ThemeData.dark(),
+      theme: AppThemes.light,
+      darkTheme: AppThemes.dark,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
