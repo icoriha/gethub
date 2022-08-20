@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:gethub/foundation/is_dark_mode.dart';
 import 'package:quiver/strings.dart';
 
 class DetailPage extends StatelessWidget {
@@ -27,20 +28,22 @@ class DetailPage extends StatelessWidget {
 class _RepoDetailCard extends StatelessWidget {
   const _RepoDetailCard(this.repo, {Key? key}) : super(key: key);
 
-  BoxDecoration get _decoration => BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(
-                color: Colors.black12, blurRadius: 24, offset: Offset(0, 8))
-          ]);
+  BoxDecoration _decoration(BuildContext context) => BoxDecoration(
+      color: Theme.of(context).cardColor,
+      borderRadius: BorderRadius.circular(16),
+      boxShadow: isDarkMode(context)
+          ? null
+          : const [
+              BoxShadow(
+                  color: Colors.black12, blurRadius: 24, offset: Offset(0, 8))
+            ]);
 
   final GitHubRepo repo;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _decoration,
+      decoration: _decoration(context),
       child: SizedBox(
         width: double.infinity,
         child: Column(
@@ -71,10 +74,11 @@ class _RepoDetailCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Divider(),
-            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Divider(
+                  color: isDarkMode(context) ? Colors.transparent : null),
+            ), // LightModeの場合のみDividerが見えるようにする
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
