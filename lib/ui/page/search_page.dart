@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
@@ -130,8 +131,8 @@ class _ErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label =
-        (errorMessage.isEmpty) ? 'An Error has occured' : errorMessage;
+    final l10n = AppLocalizations.of(context)!;
+    final label = (errorMessage.isEmpty) ? l10n.error : errorMessage;
     return Expanded(child: Center(child: Text(label)));
   }
 }
@@ -141,6 +142,7 @@ class _EmptyReposWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(child: Center(child: Text('検索結果が見つかりませんでした')));
+    final l10n = AppLocalizations.of(context)!;
+    return Expanded(child: Center(child: Text(l10n.noResult)));
   }
 }
