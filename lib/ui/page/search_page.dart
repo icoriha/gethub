@@ -133,7 +133,9 @@ class _ErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final label = (errorMessage.isEmpty) ? l10n.error : errorMessage;
-    return Expanded(child: Center(child: Text(label)));
+    return Expanded(
+        child: Center(
+            child: Text(label, style: Theme.of(context).textTheme.bodyText1)));
   }
 }
 
@@ -143,6 +145,9 @@ class _EmptyReposWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Expanded(child: Center(child: Text(l10n.noResult)));
+    return Expanded(
+        child: Center(
+            child: Text(l10n.noResult,
+                style: Theme.of(context).textTheme.bodyText1)));
   }
 }

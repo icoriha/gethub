@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:gethub/foundation/app_colors.dart';
 import 'package:gethub/foundation/app_themes.dart';
 import 'package:gethub/ui/page/search_page.dart';
 

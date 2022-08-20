@@ -27,14 +27,6 @@ class DetailPage extends StatelessWidget {
 class _RepoDetailCard extends StatelessWidget {
   const _RepoDetailCard(this.repo, {Key? key}) : super(key: key);
 
-  TextStyle get _projectNameStyle =>
-      const TextStyle(fontSize: 24, overflow: TextOverflow.ellipsis);
-  TextStyle get _projecLanguageStyle => const TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.black38,
-      );
-
   BoxDecoration get _decoration => BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -65,15 +57,13 @@ class _RepoDetailCard extends StatelessWidget {
                       children: [
                         Text(
                           repo.name,
-                          style: _projectNameStyle,
+                          style: Theme.of(context).textTheme.headline1,
                           maxLines: 2,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 2),
-                          child: Text(
-                            repo.projectLanguage,
-                            style: _projecLanguageStyle,
-                          ),
+                          child: Text(repo.projectLanguage,
+                              style: Theme.of(context).textTheme.headline2),
                         ),
                       ],
                     ),
@@ -125,27 +115,15 @@ class _CountArea extends StatelessWidget {
   final String label;
   final int count;
 
-  TextStyle get _labelStyle => const TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.bold,
-        color: Colors.black38,
-      );
-
-  TextStyle get _countStyle => const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        color: Colors.black87,
-      );
-
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Column(
         children: [
-          Text(label, style: _labelStyle),
+          Text(label, style: Theme.of(context).textTheme.headline3),
           const SizedBox(height: 2),
-          Text(count.toString(), style: _countStyle),
+          Text(count.toString(), style: Theme.of(context).textTheme.headline4),
         ],
       ),
     );
