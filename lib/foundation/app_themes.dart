@@ -4,8 +4,8 @@ import 'package:gethub/foundation/app_colors.dart';
 class AppThemes {
   static ThemeData light = ThemeData.from(
     colorScheme: const ColorScheme.light(
-      primary: AppColors.primary,
-      background: AppColors.backGround,
+      primary: AppColors.lightPrimary,
+      background: AppColors.lightBackGround,
     ),
     textTheme: TextTheme(
       headline1: const TextStyle(
@@ -17,7 +17,7 @@ class AppThemes {
       headline2: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: AppColors.primary.withOpacity(0.8),
+        color: AppColors.lightPrimary.withOpacity(0.8),
         overflow: TextOverflow.ellipsis,
       ), // For project language
       headline3: const TextStyle(
