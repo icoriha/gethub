@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key, required this.controller, this.onSubmitted})
+class SearchField extends StatelessWidget {
+  const SearchField({Key? key, required this.controller, this.onSubmitted})
       : super(key: key);
   final TextEditingController controller;
   final void Function(String)? onSubmitted;

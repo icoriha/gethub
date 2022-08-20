@@ -63,10 +63,10 @@ class __BodyState extends ConsumerState<_Body> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: SearchBar(
-                controller: _notifier.searchBarTextController,
+              child: SearchField(
+                controller: _notifier.searchFieldTextController,
                 onSubmitted: (_) {
-                  if (isNotBlank(_notifier.searchBarTextController.text)) {
+                  if (isNotBlank(_notifier.searchFieldTextController.text)) {
                     _resetScroll(); // 検索キー押下時にスクロールを初期位置に戻す
                     _notifier.search();
                   }
