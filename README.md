@@ -24,7 +24,7 @@ Android、iOSともに
 |<img width="122" alt="dev_prod_android" src="https://user-images.githubusercontent.com/56757293/185749088-ca588d88-75e0-49b5-a2b2-7c4ecaa3ae0a.png">|<img width="185" alt="dev_prod_ios" src="https://user-images.githubusercontent.com/56757293/185749117-fd87ca06-40aa-47cf-83b1-94bdf9d374ef.png">|
 
 ## 実行
-|SDK|バージョン|
+||バージョン|
 |-|-|
 |Flutter|3.0.5|
 |Dart|2.17.6|
