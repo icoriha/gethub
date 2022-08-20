@@ -1,5 +1,6 @@
 {
   "@@locale": "ja",
+  "searchRepositories": "リポジトリを検索",
   "noResult": "検索結果が見つかりませんでした。",
   "error": "エラーが発生しました。"
 }
