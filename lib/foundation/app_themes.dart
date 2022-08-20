@@ -37,7 +37,8 @@ class AppThemes {
     ),
   );
 
-  static ThemeData dark = ThemeData.from(
+  static ThemeData dark = ThemeData.dark().copyWith(
+    appBarTheme: const AppBarTheme(backgroundColor: AppColors.darkPrimary),
     colorScheme: const ColorScheme.dark(
       primary: AppColors.darkPrimary,
       background: AppColors.darkBackGround,

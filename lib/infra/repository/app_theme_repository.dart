@@ -24,6 +24,6 @@ class AppThemeRepository {
   Future<bool> getIsDarkValue() async {
     final prefs = await SharedPreferences.getInstance();
     final value = prefs.getBool('isDark');
-    return value ?? true;
+    return value ?? false;
   }
 }

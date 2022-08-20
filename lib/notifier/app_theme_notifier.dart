@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gethub/domain/model/app_theme.dart';
 import 'package:gethub/infra/repository/app_theme_repository.dart';
 import 'package:gethub/notifier/app_theme_state.dart';
 
@@ -23,9 +22,10 @@ class AppThemeNotifier extends StateNotifier<AppThemeState> {
       isDark: isDark,
       isLoading: false,
     );
+    state = state.copyWith(isLoading: false);
   }
 
-  void _toggleDeviceOrNot() {
+  void toggleIsDevice() {
     state = state.copyWith(isDevice: !state.isDevice);
     if (state.isDevice) {
       state = state.copyWith(isDark: false);
@@ -33,19 +33,11 @@ class AppThemeNotifier extends StateNotifier<AppThemeState> {
     _repository.setIsDeviceValue(state.isDevice);
   }
 
-  void _toggleDarkOrLight() {
+  void toggleIsDark() {
     state = state.copyWith(isDark: !state.isDark);
     if (state.isDark) {
       state = state.copyWith(isDevice: false);
     }
     _repository.setIsDarkValue(state.isDark);
   }
-
-  AppTheme _currentTheme() {
-    if (state.isDevice) return AppTheme.device;
-    if (state.isDark) return AppTheme.dark;
-    return AppTheme.light;
-  }
-
-  AppTheme get currentTheme => _currentTheme();
 }
