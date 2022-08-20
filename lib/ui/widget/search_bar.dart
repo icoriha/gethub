@@ -14,12 +14,13 @@ class SearchBar extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.search),
         hintText: l10n.searchRepositories,
+        counterText: '',
       ),
       textInputAction: TextInputAction.search,
       autofocus: true,
       controller: controller,
       onSubmitted: onSubmitted,
-      maxLength: 80,
+      maxLength: 300,
     );
   }
 }
