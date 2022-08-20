@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gethub/domain/model/github_repo.dart';
+import 'package:gethub/foundation/is_dark_mode.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
 import 'package:gethub/ui/page/setting_page.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
@@ -88,6 +89,8 @@ class __BodyState extends ConsumerState<_Body> {
               pageState.repos,
               scrollController: _scrollController,
               errorMessage: pageState.errorMessage,
+              isDark: ref.watch(
+                  isDarkProvider(MediaQuery.platformBrightnessOf(context))),
             ),
           ],
         ),
@@ -112,11 +115,13 @@ class _RepoListView extends StatelessWidget {
     this.repos, {
     Key? key,
     required this.scrollController,
+    required this.isDark,
     this.errorMessage,
   }) : super(key: key);
   final List<GitHubRepo>? repos;
   final ScrollController scrollController;
   final String? errorMessage;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +134,10 @@ class _RepoListView extends StatelessWidget {
         controller: scrollController,
         itemCount: repos!.length,
         itemBuilder: (BuildContext context, int i) {
-          return RepoListTile(repos![i]);
+          return RepoListTile(
+            repos![i],
+            isDark: isDark,
+          );
         },
       ),
     );
