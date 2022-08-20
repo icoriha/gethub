@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: const [
         Locale('en', ''),
-        Locale('es', ''),
+        Locale('ja', ''),
       ],
       home: const SearchPage(),
     );
