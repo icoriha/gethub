@@ -36,6 +36,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.10.0
 
   # For Gen
   build_runner: ^2.2.0
@@ -49,3 +50,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path_android: "assets/app_icons/app_icon_android.png"
+  image_path_ios: "assets/app_icons/app_icon_ios.png"
