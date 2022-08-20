@@ -2,5 +2,8 @@
   "@@locale": "en",
   "searchRepositories": "Search repositories",
   "noResult": "No results found.",
-  "error": "An error has occured."
+  "error": "An error has occured.",
+  "settings": "Settings",
+  "useDeviceMode": "Use device settings mode",
+  "darkMode": "Dark mode"
 }

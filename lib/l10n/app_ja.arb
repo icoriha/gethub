@@ -2,5 +2,8 @@
   "@@locale": "ja",
   "searchRepositories": "リポジトリを検索",
   "noResult": "検索結果が見つかりませんでした。",
-  "error": "エラーが発生しました。"
+  "error": "エラーが発生しました。",
+  "settings": "設定",
+  "useDeviceMode": "端末設定のモードを使用",
+  "darkMode": "ダークモード"
 }

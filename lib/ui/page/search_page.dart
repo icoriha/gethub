@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gethub/domain/model/github_repo.dart';
 import 'package:gethub/notifier/search_page_notifier.dart';
+import 'package:gethub/ui/page/setting_page.dart';
 import 'package:gethub/ui/widget/repo_list_tile.dart';
 import 'package:gethub/ui/widget/search_field.dart';
 import 'package:quiver/strings.dart';
@@ -13,7 +14,17 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('GetHub')),
+      appBar: AppBar(
+        title: const Text('GetHub'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const SettingPage()),
+            ),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
+      ),
       body: const _Body(),
     );
   }
