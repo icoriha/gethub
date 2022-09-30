@@ -25,6 +25,7 @@ class AppThemeNotifier extends StateNotifier<AppThemeState> {
       state = state.copyWith(isDark: false);
     }
     _repository.setIsDeviceValue(state.isDevice);
+    _repository.setIsDarkValue(state.isDark);
   }
 
   void toggleIsDark() {
@@ -32,6 +33,7 @@ class AppThemeNotifier extends StateNotifier<AppThemeState> {
     if (state.isDark) {
       state = state.copyWith(isDevice: false);
     }
+    _repository.setIsDeviceValue(state.isDevice);
     _repository.setIsDarkValue(state.isDark);
   }
 }
